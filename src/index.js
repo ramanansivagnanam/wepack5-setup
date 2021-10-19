@@ -1,6 +1,8 @@
 import './styles/index.css';
 
-import { render } from 'react-dom';
+import App from './components/App';
+
+import ReactDom from 'react-dom';
 
 const person = {
     name : "Ramanan",
@@ -12,5 +14,5 @@ const profession = {
 }
 console.log(profession);
 console.log(person);
-
-render(<h1> React setup </h1>, document.getElementById('root'));
+ReactDom.render
+(<App/>, document.getElementById('root'));

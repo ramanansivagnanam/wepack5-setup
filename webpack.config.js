@@ -3,18 +3,28 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin');
 
 let mode = "development"
 
-if(process.env.NODE_ENV?.trim() === "production") {
+if (process.env.NODE_ENV?.trim() === "production") {
     mode = "production"
 }
 
 module.exports = {
-    mode : mode,
+    mode: mode,
     devtool: "source-map",
     module: {
         rules: [
             {
+                test: /\.(png|jpg|jpeg|gif)$/i,
+                type: "asset/resource"
+
+            },
+            {
                 test: /\.css$/i,
-                use: [miniCssExtractPlugin.loader, "css-loader"]
+                use: [{
+                    loader: miniCssExtractPlugin.loader,
+                    options : { publicPath: ""}
+                },
+                    "css-loader"
+                ]
             },
             {
                 test: /\.js$/,
@@ -27,7 +37,7 @@ module.exports = {
             },
         ]
     },
-    plugins : [ new miniCssExtractPlugin()],
+    plugins: [new miniCssExtractPlugin()],
     devServer: {
         static: {
             directory: path.join(__dirname, 'dist'),
@@ -36,8 +46,8 @@ module.exports = {
         port: 9000,
         hot: true,
     },
-    resolve :  {
-        extensions : [".js", ".jsx"],
+    resolve: {
+        extensions: [".js", ".jsx"],
     },
-    
+
 }
