@@ -1,3 +1,5 @@
+import './styles/index.css';
+
 const person = {
     name : "Ramanan",
     age : 20
