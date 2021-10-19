@@ -35,5 +35,9 @@ module.exports = {
         compress: true,
         port: 9000,
         hot: true,
-    }
+    },
+    resolve :  {
+        extensions : [".js", ".jsx"],
+    },
+    
 }
