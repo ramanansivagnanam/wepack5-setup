@@ -1,7 +1,7 @@
 const path = require('path');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 let mode = "development"
 
 if (process.env.NODE_ENV?.trim() === "production") {
@@ -13,6 +13,7 @@ module.exports = {
     devtool: "source-map",
 
     output: {
+        path: path.resolve(__dirname, "dist"),
         assetModuleFilename: 'images/[hash][ext][query]'
     },
     module: {
@@ -43,7 +44,9 @@ module.exports = {
             },
         ]
     },
-    plugins: [new miniCssExtractPlugin(), new htmlWebpackPlugin()],
+    plugins: [new CleanWebpackPlugin() , new miniCssExtractPlugin(), new htmlWebpackPlugin({
+        template : "./src/index.html"
+    })],
     devServer: {
         static: {
             directory: path.join(__dirname, 'dist'),
