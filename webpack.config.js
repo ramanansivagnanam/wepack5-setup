@@ -1,6 +1,8 @@
 const path = require('path');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 let mode = "development"
 
@@ -11,7 +13,7 @@ if (process.env.NODE_ENV?.trim() === "production") {
 module.exports = {
     mode: mode,
     devtool: "source-map",
-
+    entry : "./src/index.js",
     output: {
         path: path.resolve(__dirname, "dist"),
         assetModuleFilename: 'images/[hash][ext][query]'
@@ -21,14 +23,14 @@ module.exports = {
             {
                 test: /\.(png|jpg|jpeg|gif)$/i,
                 // type: "asset/resource" asset ll be good
-                type:"asset/resource",
+                type: "asset/resource",
 
             },
             {
                 test: /\.css$/i,
                 use: [{
                     loader: miniCssExtractPlugin.loader,
-                    options : { publicPath: ""}
+                    options: { publicPath: "" }
                 },
                     "css-loader"
                 ]
@@ -44,9 +46,14 @@ module.exports = {
             },
         ]
     },
-    plugins: [new CleanWebpackPlugin() , new miniCssExtractPlugin(), new htmlWebpackPlugin({
-        template : "./src/index.html"
-    })],
+    plugins: [
+    new CleanWebpackPlugin(),
+    new miniCssExtractPlugin(),
+    new htmlWebpackPlugin({
+        template: "./src/index.html"
+    }),
+    new ReactRefreshWebpackPlugin( {forceEnable: true} )
+],
     devServer: {
         static: {
             directory: path.join(__dirname, 'dist'),
